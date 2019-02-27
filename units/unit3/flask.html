@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js'></script>
+  <script>MathJax.Hub.Config({
+    config: ["MMLorHTML.js"],
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    TeX: {
+      extensions: ["AMSmath.js", "AMSsymbols.js"],
+      TagSide: "right",
+      TagIndent: ".8em",
+      MultLineWidth: "85%",
+      equationNumbers: {
+        autoNumber: "AMS",
+      },
+      unicode: {
+        fonts: "STIXGeneral,'Arial Unicode MS'"
+      }
+    },
+    displayAlign: "left",
+    showProcessingMessages: false,
+    messageStyle: 'none'
+  });</script>
+  <title>IT Introduction: Flask web server. Serving HTML pages</title>
+</head>
+<body>
+  <article class="markdown-body">
+    <p>
+      <link type="text/css" rel="stylesheet" href="../../style.css">
+    </p>
+    <h1 id="html-lesson-2"><a name="user-content-html-lesson-2" href="#html-lesson2" class="headeranchor-link" aria-hidden="true">
+      <span class="headeranchor"></span></a>Serving pages using a web server: Flask</h1>
+
+      <h2 id="running-html">Reminder</h2>
+      <p>If you have doubts about HTML, CSS, JS and/or the client-server architecture, please review the 
+      <a href="https://albertogilf.github.io/web_server_introduction/units/unit2/deployinghtml.html"> previous lesson</a> </p>
+      <ul>
+        <li><b>The Server</b>: this party is responsible for serving pages.</li>
+        <li><b>The client </b>: this party requests pages from the <b>server</b>, and displays them to the user. 
+        In most cases, the client is a web browser. </li>
+        <li><b>The user</b>: the user uses the client (browser or any other type of client) to surf the web, to request music in spotify, to post in instagram, etc.</li>
+      </ul>
+      <p>Each side's (client-side and server-side) programming refers to the place where the code runs. The client-side code runs in the client machine, and server-side code runs in the server, wherever it is. </p>
+      <img src="client_server_model.png" alt="Client-server architecture">
+      <p>It is important to remark that the programming language <b>DOES NOT</b> determine if the code is server-side or client-side, the place where it is executed is what makes the difference.</p>
+      <h2 id="server-side-code">Server-side Programming</h2>
+      <p> The server side programming is the general name for the programs that run on the <b>server</b>. 
+      </p>
+      <h3>The server</h3>
+      <p>In computing, a server is a computer program or a device that provides functionality for other programs or devices, called "clients". This architecture is called the client–server model, and a single overall computation is distributed across multiple processes or devices. Servers can provide various functionalities, often called "services", such as sharing data or resources among multiple clients, or performing computation for a client.</p>
+      <h3>Uses</h3>
+      <ul>
+        <li>process a formulary</li>
+        <li>Compile code</li>
+        <li>Persist information in databases</li>
+        <li>Run search algorithms</li>
+      </ul>
+      <h3>Example Languages</h3>
+      <ul>
+        <li>Python</li>
+        <li>Java</li>
+        <li>C</li>
+        <li>SQL</li>
+        <li>JavaScript</li>
+      </ul>
+      <h2 id="client-side-code">Client-side (browser) Programming</h2>
+      <p> Analogously to the server side programming, the client-side programming is the general name for the programs that run on the <b>client</b>. 
+      </p>
+      <h3>Uses</h3>
+      <ul>
+        <li>Make dynamic web pages.</li>
+        <li>Interact with temporary storage (e.g. uploading a file to a server, cookies).</li>
+        <li>Send requests to the server and process the data from the server.</li>
+        <li>Interact with the user to send the data to the server</li>
+      </ul>
+      <h3>Example Languages</h3>
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JQUERY</li>
+        <li>AJAX</li>
+        <li>JavaScript</li>
+      </ul>
+
+      <h2>Use of case</h2>
+      <ol>
+        <li>The user opens the Mozilla Firefox (Web browser).</li>
+        <li>The user browses to the Virtual campus of CEU.</li>
+        <li>The client (by indication of the user) sends a request to the virtual campus of CEU, processing the meta-data, which is in the headers, and the page's source code (e.g. click right button right now and navigates to "view page source").</li>
+        <li>The client renders the information to make it visible according to the browser specifications.</li>
+        <li>The user types the username and the password, and submit the information.</li>
+        <li>The client (browser) submits the data to the server</li>
+        <li>The server processes the data received, make all the processing it needs, like checking if the username exists and if the password is correct.</li>
+        <li>The server sends the response to the client. The response can be different depending on the processed data (if the username and password were correct or not). </li>
+        <li>The client renders again the page received by the server response.</li>
+      </ol>
+
+      <h2 id="hello-browser-code">
+      Hello, browser code</h2>
+      <p>Browser run different types of code</p>
+      <ul>
+        <li><b>HTML</b>: short for HyperText Markup Language. A markup language is a language that includes both content and tags for how to render this content.
+        From a practical point of view, it tells the client (browser in most of the cases) what to display. It includes       the content of a webpage (text, audio, video, images, etc.) and instructions for where and how to position everything. It is stored in .html files.</li>
+        <li><b>CSS</b>: short for Cascading Style Sheets. CSS provides style instructions in a hierarchichal way. According to wikipedia "The CSS specification describes a priority scheme to determine which style rules apply if more than one rule matches against a particular element. In this so-called cascade, priorities (or weights) are calculated and assigned to rules, so that the results are predictable." However, this definition misses an important term: the results are deterministic, they are always, no matter from where we execute the code with a specific .css, the result will always be the same.
+        From a practical point of view, CSS tells the client (browser) how to format the HTML. In the HTML it is specified the content: the lists, the tables, etc., while in the .css it is specified how it will be displayed: the color of the table headers, the font, the size, etc. CSS is stored in .css files and it can be embedded in .html files and elements.</li>
+        <li><b>JavaScript</b>: programming language to execute code (as you learnt with python). However, it is very light and it is a standard that most of the browser (I would say all!) incoporates. It tells the browser what to do. For example, when a formulary needs to be checked before sending (for mandatory fields or the information type that the fields can contain), the programming language used is javascript, and this code is executed directly in the browser, before sending any request, and decreasing the network usage and minimizing the overload of the server :). 
+        It is stored in .js files, and it can be inserted in .html files.</li>
+      </ul>
+
+    <h2 id="first-program-html">
+    Assignments</h2>
+    <p>Now we are going to create our first HTML page, playing only with .css and .html documents. For now we will forget about .js programming to develop client-side functions.</p>
+    <p>Create a new plunker in your <a href="http://plnkr.co">plnkr.co</a> account. Remember to save a different plunker for each assignment, and save the documents created in the folder exercises within the unit2 directory. Name them as assignmentX.html, corresponding to each one of the next list</p>
+    <p>We are going to write some fake news in our prehistoric web! The source will be with you. You are encouraged to use the HTML tutorials 
+    and any search on internet.</p>
+    <ol>
+      <li>Writing fake news!<ul>
+        <li>Copy the content of the file fakenews.html into the plunk editor. Wait until it loads the content. What do you see?</li>
+        <li>Change the title of the page. In which section do you do it?</li>
+        <li>Create the headline of the fake news. Use the HTML attributes to create the biggest head. Hint: use the &lt;h1&gt; tags!</li>
+        <li>Create the content. Use the HTML attributes to create them. Hint: use the &lt;p&gt; and &lt;br&gt; tags!</li>
+      </ul></li>
+      <li>Make a copy of your previous exercise! Now we are going to edit the text<ul>
+        <li>Remark the main ideas of the text using a strong mark. Hint: use the &lt;strong&gt; tags!</li>
+        <li>Emphatise the first and the last sentence of the text. Hint: use the &lt;em&gt; tags!</li>
+      </ul></li>
+      <li>Make a copy of your previous exercise! Now we are going to do lists<ul>
+        <li>Create a list with three headlines from other 3 fake news . Hint: use the &lt;ul&gt;, &lt;ol&gt; and &lt;li&gt; tags!
+        What does each one? What is the difference between them?</li>
+        <li>Add some image to support your text. Hint:Use the &lt;img&gt; tag! Check the attributes of the &lt;img&gt; tag</li>
+        <li>Why the image does not show up in plnkr.co?</li>
+        <li>Use an attribute in the previous &lt;img&gt; tag to show an alternative text when the image cannot be displayed.</li>
+      </ul></li>
+      <li>Make a copy of your previous exercise! Let's stylize our arcaic web page. People do not believe fake news in b/w, we should make it real :)<ul>
+        <li>Watch the css tutorial <a href="https://www.w3schools.com/css/" </li>
+        <li>Add a &lt;style&gt; section in the header</li>
+        <li>Add a directive to change the background color of the &lt;body&gt; section</li>
+        <li>Add a directive to change the background color of the &lt;p&gt; sections</li>
+        <li>Add a directive to change the text color of the title (&lt;h1&gt; section)</li>
+        <li>EXTRA POINT! Will you be able to set different styles for different &lt;p&gt; tags? Ask the professor if you are interested and you need a hand!</li>
+      </ul></li>
+    </ol>
+
+  </article>
+</body>
+</html>
