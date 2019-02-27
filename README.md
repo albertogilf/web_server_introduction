@@ -1,6 +1,8 @@
 ## Flask Tutorial
 
-* [Lesson 1: Python](https:/albertogilf.github.io/<TODO_YET_THE_WEB_PAGE>)
+* [Lesson 1: HTML](https:/albertogilf.github.io/web_server_introduction/units/unit1/HTML.html)
+* [Lesson 2: DEPLOYING HTML](https:/albertogilf.github.io/web_server_introduction/units/unit2/deployinghtml.html)
+* [Lesson 3: FLASK](https:/albertogilf.github.io/web_server_introduction/units/unit3/flask.html)
 
 # Start the "webapp" Project: Navigating The Terminal
 Before creating the webapp project, you should do a few tasks:
