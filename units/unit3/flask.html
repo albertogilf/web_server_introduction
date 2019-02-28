@@ -41,110 +41,63 @@
       <h2 id="running-html">Reminder</h2>
       <p>If you have doubts about HTML, CSS, JS and/or the client-server architecture, please review the 
       <a href="https://albertogilf.github.io/web_server_introduction/units/unit2/deployinghtml.html"> previous lesson</a> </p>
-      <ul>
-        <li><b>The Server</b>: this party is responsible for serving pages.</li>
-        <li><b>The client </b>: this party requests pages from the <b>server</b>, and displays them to the user. 
-        In most cases, the client is a web browser. </li>
-        <li><b>The user</b>: the user uses the client (browser or any other type of client) to surf the web, to request music in spotify, to post in instagram, etc.</li>
-      </ul>
-      <p>Each side's (client-side and server-side) programming refers to the place where the code runs. The client-side code runs in the client machine, and server-side code runs in the server, wherever it is. </p>
-      <img src="client_server_model.png" alt="Client-server architecture">
-      <p>It is important to remark that the programming language <b>DOES NOT</b> determine if the code is server-side or client-side, the place where it is executed is what makes the difference.</p>
-      <h2 id="server-side-code">Server-side Programming</h2>
-      <p> The server side programming is the general name for the programs that run on the <b>server</b>. 
-      </p>
-      <h3>The server</h3>
-      <p>In computing, a server is a computer program or a device that provides functionality for other programs or devices, called "clients". This architecture is called the client–server model, and a single overall computation is distributed across multiple processes or devices. Servers can provide various functionalities, often called "services", such as sharing data or resources among multiple clients, or performing computation for a client.</p>
-      <h3>Uses</h3>
-      <ul>
-        <li>process a formulary</li>
-        <li>Compile code</li>
-        <li>Persist information in databases</li>
-        <li>Run search algorithms</li>
-      </ul>
-      <h3>Example Languages</h3>
-      <ul>
-        <li>Python</li>
-        <li>Java</li>
-        <li>C</li>
-        <li>SQL</li>
-        <li>JavaScript</li>
-      </ul>
-      <h2 id="client-side-code">Client-side (browser) Programming</h2>
-      <p> Analogously to the server side programming, the client-side programming is the general name for the programs that run on the <b>client</b>. 
-      </p>
-      <h3>Uses</h3>
-      <ul>
-        <li>Make dynamic web pages.</li>
-        <li>Interact with temporary storage (e.g. uploading a file to a server, cookies).</li>
-        <li>Send requests to the server and process the data from the server.</li>
-        <li>Interact with the user to send the data to the server</li>
-      </ul>
-      <h3>Example Languages</h3>
-      <ul>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JQUERY</li>
-        <li>AJAX</li>
-        <li>JavaScript</li>
-      </ul>
+      <p>At this point you should be able to create HTML pages, stylize them using CSS and run code in the browser with JavaScript. 
+      Clients send requests to the servers, the servers processes the requests and send responses to the clients, that display them. 
+      The web servers usually respond by sending HTML, CSS and Javascript. The response is then handled by the browser, that 
+      runs the JavaScript code, displays the HTML and uses the CSS to style the HTML. If you are loose when you read this paragraph, 
+      run to the previous lesson and review it!</p>
 
-      <h2>Use of case</h2>
-      <ol>
-        <li>The user opens the Mozilla Firefox (Web browser).</li>
-        <li>The user browses to the Virtual campus of CEU.</li>
-        <li>The client (by indication of the user) sends a request to the virtual campus of CEU, processing the meta-data, which is in the headers, and the page's source code (e.g. click right button right now and navigates to "view page source").</li>
-        <li>The client renders the information to make it visible according to the browser specifications.</li>
-        <li>The user types the username and the password, and submit the information.</li>
-        <li>The client (browser) submits the data to the server</li>
-        <li>The server processes the data received, make all the processing it needs, like checking if the username exists and if the password is correct.</li>
-        <li>The server sends the response to the client. The response can be different depending on the processed data (if the username and password were correct or not). </li>
-        <li>The client renders again the page received by the server response.</li>
-      </ol>
+      <p>Remember also the python programming learnt in the previous lessons. It will provide us with the basic knowledge to know what 
+      the Flask web server is doing. The source runs strong with a consolidated knowledge :)</p>
+      <p>In this lesson we will use repl.it, since it allows us to host a server in their hosting service, so we will be able to 
+      deploy our web pages using their hosting!</p>
 
-      <h2 id="hello-browser-code">
-      Hello, browser code</h2>
-      <p>Browser run different types of code</p>
+      <h2 id="client-side-code">Serving HTML content. The source awakens</h2>
+      
+      <iframe height="500px" width="100%" src="https://repl.it/@AlbertoGil/flask-test?lite=true" 
+      scrolling="no" frameborder="no" allowtransparency="true" 
+      allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+      <p>Take a look in the code from repl.it. Open it in a full screen, clicking in the top right corner (open in repl.it) button 
+      or navigating to <a href="https://repl.it/@AlbertoGil/flask-test">https://repl.it/@AlbertoGil/flask-test</a>. 
+      Check out the different files there:</p>
       <ul>
-        <li><b>HTML</b>: short for HyperText Markup Language. A markup language is a language that includes both content and tags for how to render this content.
-        From a practical point of view, it tells the client (browser in most of the cases) what to display. It includes       the content of a webpage (text, audio, video, images, etc.) and instructions for where and how to position everything. It is stored in .html files.</li>
-        <li><b>CSS</b>: short for Cascading Style Sheets. CSS provides style instructions in a hierarchichal way. According to wikipedia "The CSS specification describes a priority scheme to determine which style rules apply if more than one rule matches against a particular element. In this so-called cascade, priorities (or weights) are calculated and assigned to rules, so that the results are predictable." However, this definition misses an important term: the results are deterministic, they are always, no matter from where we execute the code with a specific .css, the result will always be the same.
-        From a practical point of view, CSS tells the client (browser) how to format the HTML. In the HTML it is specified the content: the lists, the tables, etc., while in the .css it is specified how it will be displayed: the color of the table headers, the font, the size, etc. CSS is stored in .css files and it can be embedded in .html files and elements.</li>
-        <li><b>JavaScript</b>: programming language to execute code (as you learnt with python). However, it is very light and it is a standard that most of the browser (I would say all!) incoporates. It tells the browser what to do. For example, when a formulary needs to be checked before sending (for mandatory fields or the information type that the fields can contain), the programming language used is javascript, and this code is executed directly in the browser, before sending any request, and decreasing the network usage and minimizing the overload of the server :). 
-        It is stored in .js files, and it can be inserted in .html files.</li>
+        <li>main.py: Server-side code where the server runs its code</li>
+        <li>static: folder where the html pages to be served from the web server are allocated. It contains the lib folder where the .css and .js 
+        files are stored. They are sent to the client as well.</li>
+        <li>templates: similar to the previous folder, but it contains templates instead of static pages. Templates are usually used as a base 
+        to create HTML web pages. When we return the output of the template (using the function <code>render_template</code>, we send the corresponding 
+        file, but all the variables under curly braces <code>{{variable}}</code> are checked. If we give information about this variable 
+        in the request, it gets replaced by its value. </li>
       </ul>
+      <p>The served content can be accesed clicking the <img src="popout.png" width="20" alt="popout"/> button or navigating to 
+      <a href="https://flask-test.albertogil.repl.co">https://flask-test.albertogil.repl.co</a>.</p>
+      <p>Now navigate to the	<code>/goodbye</code> on the end. What do you see? How do you think python generates what you see?</p>
 
-    <h2 id="first-program-html">
+    <h2 id="assignments">
+    Flask functions</h2>
+    <ul>
+    <li><strong><code>@app.route('{route}')</code></strong>: tt returns to the client whatever it is in the function defined under this directive. 
+    </li>
+    <li><strong><code>app.send_static_file('{static_file_name}')</code></strong>: it sends the specified file as it is to the client. The client figures out what to do with it.</li>
+    <li><strong><code>render_template('{template_name}')</code></strong>: it sends the specified template to the client. Before sending it, it checks all the pairs between 
+    curly braces <code>{{variable}}</code> If there is some information about the variables between curly braces, it replace them with the value provided.</li>
+    </ul>
+    <h2 id="assignments">
     Assignments</h2>
-    <p>Now we are going to create our first HTML page, playing only with .css and .html documents. For now we will forget about .js programming to develop client-side functions.</p>
-    <p>Create a new plunker in your <a href="http://plnkr.co">plnkr.co</a> account. Remember to save a different plunker for each assignment, and save the documents created in the folder exercises within the unit2 directory. Name them as assignmentX.html, corresponding to each one of the next list</p>
-    <p>We are going to write some fake news in our prehistoric web! The source will be with you. You are encouraged to use the HTML tutorials 
-    and any search on internet.</p>
+    <p>We want to deploy the amazing HTML web page that we created the previous week. No one wants to miss it :)</p>
     <ol>
-      <li>Writing fake news!<ul>
-        <li>Copy the content of the file fakenews.html into the plunk editor. Wait until it loads the content. What do you see?</li>
-        <li>Change the title of the page. In which section do you do it?</li>
-        <li>Create the headline of the fake news. Use the HTML attributes to create the biggest head. Hint: use the &lt;h1&gt; tags!</li>
-        <li>Create the content. Use the HTML attributes to create them. Hint: use the &lt;p&gt; and &lt;br&gt; tags!</li>
-      </ul></li>
-      <li>Make a copy of your previous exercise! Now we are going to edit the text<ul>
-        <li>Remark the main ideas of the text using a strong mark. Hint: use the &lt;strong&gt; tags!</li>
-        <li>Emphatise the first and the last sentence of the text. Hint: use the &lt;em&gt; tags!</li>
-      </ul></li>
-      <li>Make a copy of your previous exercise! Now we are going to do lists<ul>
-        <li>Create a list with three headlines from other 3 fake news . Hint: use the &lt;ul&gt;, &lt;ol&gt; and &lt;li&gt; tags!
-        What does each one? What is the difference between them?</li>
-        <li>Add some image to support your text. Hint:Use the &lt;img&gt; tag! Check the attributes of the &lt;img&gt; tag</li>
-        <li>Why the image does not show up in plnkr.co?</li>
-        <li>Use an attribute in the previous &lt;img&gt; tag to show an alternative text when the image cannot be displayed.</li>
-      </ul></li>
-      <li>Make a copy of your previous exercise! Let's stylize our arcaic web page. People do not believe fake news in b/w, we should make it real :)<ul>
-        <li>Watch the css tutorial <a href="https://www.w3schools.com/css/" </li>
-        <li>Add a &lt;style&gt; section in the header</li>
-        <li>Add a directive to change the background color of the &lt;body&gt; section</li>
-        <li>Add a directive to change the background color of the &lt;p&gt; sections</li>
-        <li>Add a directive to change the text color of the title (&lt;h1&gt; section)</li>
-        <li>EXTRA POINT! Will you be able to set different styles for different &lt;p&gt; tags? Ask the professor if you are interested and you need a hand!</li>
+      <li>Making our fake news worlwide accesible!
+        <ul>
+        <li>Create your own web application server copying the files from the <a href="https://flask-test.albertogil.repl.co">repl.it</a> provided 
+        and check that it works and it is accesible in the domain assigned by repl.it to your repl.it</li>
+        <li>Create different routes that returns different content. Y</li>
+        <li>Insert content into the HTML pages so instead of write the routes in the navigation bar of the browser, we can click into the links 
+        provided in your HTML page. HINT: Use &lt;a&gt; tags and its corresponding attributes.</li>
+        <li>Deploy a template using variables to return with different calls. The template should be called from two different routes named 
+        <code>atleti</code> and <code>rayo</code>. Does it display different content in the browser?</li>
+        <li>EXTRA. You can make any change to the repl.it apps modifying the .py, .css, .js or .html files! You will see if there is any error when the code is automatically deployed. 
+        As long as the website runs, all plays are allowed. Use the source, Luke!</li>
       </ul></li>
     </ol>
 
