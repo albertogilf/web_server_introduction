@@ -74,15 +74,73 @@
       <a href="https://flask-test.albertogil.repl.co">https://flask-test.albertogil.repl.co</a>.</p>
       <p>Now navigate to the	<code>/goodbye</code> on the end. What do you see? How do you think python generates what you see?</p>
 
-    <h2 id="assignments">
+      <h2 id="how-to-serve-content"> How to serve HTML content</h2>
+      <p>
+        There are different functions to serve content using Flask: 
+        <ul>
+          <li>Flask(__name__)</li>
+        </ul>
+      </p>
+
+    <h2 id="flask-functions">
     Flask functions</h2>
     <ul>
-    <li><strong><code>@app.route('{route}')</code></strong>: tt returns to the client whatever it is in the function defined under this directive. 
-    </li>
-    <li><strong><code>app.send_static_file('{static_file_name}')</code></strong>: it sends the specified file as it is to the client. The client figures out what to do with it.</li>
-    <li><strong><code>render_template('{template_name}')</code></strong>: it sends the specified template to the client. Before sending it, it checks all the pairs between 
-    curly braces <code>{{variable}}</code> If there is some information about the variables between curly braces, it replace them with the value provided.</li>
+      <li><strong><code>@app.route('{route}')</code></strong>: tt returns to the client whatever it is in the function defined under this directive. 
+      </li>
+      <li><strong><code>app.send_static_file('{static_file_name}')</code></strong>: it sends the specified file as it is to the client. The client figures out what to do with it. It does not compile/render any file referenced by the HTML.</li>
+      <li><strong><code>render_template('{template_name}')</code></strong>: it sends the specified template to the client. Before sending it, it checks all the pairs between curly braces <code>{{variable}}</code> and it compiles the HTML page and its references. If there is some information about the variables between the curly braces previously mentioned, it replace them with the value provided. If there are links to other files, it rendes a template with all the information needed. It is mandatory to import the library render_template in the first line of our python flask file. </li>
+      <code>
+        from flask import Flask, render_template
+      </code>
     </ul>
+
+    <h2 id="formulary">
+    Creating our first formulary</h2>
+    <ul>
+      <li>
+        <strong> Creating the form:</strong>: <a href="https://www.w3schools.com/tags/tag_input.asp">FORM label </a>.
+        </p>Insert a form html object in your html page. This is one example where the formulary is sending an attribute name of type text. </p>
+        <code>
+          &lt;form action="/getName" method="post"&gt;
+          Enter your name: &lt;input type="text" name="name"&gt;<br>
+          &lt;input type="submit" value="Submit"&gt;
+          &lt;/form&gt;
+        </code>
+        <p>The form label especifies an action (the route where it will the data collected in the different objects within the form label).  This route should handle the data sent. In this example, the data obtained is the text introduced by the user in the field name and it send the data in a post request that is handled by the route "getName".</p>
+      </li>
+      <li>
+        <strong>Methods to send form data</strong>: 
+        <ul>
+          <li>
+            <strong>GET</strong>: through URL variables.
+            <ul>
+              <li>Appends form-data into the URL in name/value pairs.</li>
+              <li>The length of a URL is limited (about 3000 characters).</li>
+              <li>Never use GET to send sensitive data! (will be visible in the URL).</li>
+              <li>Useful for form submissions where a user want to bookmark the result.</li>
+              <li>GET is better for non-secure data, like query strings in Google.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>POST</strong>: HTTP post transaction
+            <ul>
+              <li>Appends form-data inside the body of the HTTP request (data is not shown is in URL).</li>
+              <li>Has no size limitations.</li>
+              <li>Form submissions with POST cannot be bookmarked.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong><a href="http://flask.pocoo.org/docs/1.0/api/#flask.Request">Accessing form data from Flask</a></strong>: 
+        <p>The request library from flask provides distinct methods to read the data contained in a request. The request.form contains the key/value pairs in the body, from a HTML post form, or JavaScript request that isn't JSON encoded. The next code shows how to read a variable of a form: </p>
+        <code>(request.form['&lt;ATTRIBUTE_NAME_THAT_I_WANT_TO_USE&lt;'])</code>
+        <p>The next image shows an example of a route that receives the data formulary and returns it as text in the response.
+        <img src="replit_readingform.jpg" alt="Example of a function for handling data from a form in a post method">
+      </li>
+
+    </ul>
+
     <h2 id="assignments">
     Assignments</h2>
     <p>We want to deploy the amazing HTML web page that we created the previous week. No one wants to miss it :)</p>
@@ -97,7 +155,8 @@
         <li>Deploy a template using variables to return with different calls. The template should be called from two different routes named 
         <code>atleti</code> and <code>rayo</code>. Does it display different content in the browser?</li>
         <li>EXTRA. You can make any change to the repl.it apps modifying the .py, .css, .js or .html files! You will see if there is any error when the code is automatically deployed. 
-        As long as the website runs, all plays are allowed. Use the source, Luke!</li>
+        As long as the website runs, all plays are allowed. </li>
+        <li>EXTRA. You can create a formulary to handle user data in your web server. Once you have seen an example of a formulary that collects a text input from the user in the attribute name, it sends it to the app server in the route getName and it returns a "hello &lt;TEXT_CONTAINED_IN_NAME_ATTRIBUTE&gt;", you can create more complex formularies. Use the source, Luke!</li>
       </ul></li>
     </ol>
 
